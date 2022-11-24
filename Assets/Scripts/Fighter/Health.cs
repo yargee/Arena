@@ -14,7 +14,7 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.Log("Taking damage " + damage);
+        //Debug.Log("Taking damage " + damage);
 
         _currentHealth = damage >= _currentHealth ? 0 : _currentHealth - damage;
 
@@ -26,7 +26,7 @@ public class Health : MonoBehaviour
 
     public void GetHeal(int heal)
     {
-        Debug.Log("Healing for " + heal);
+        //Debug.Log("Healing for " + heal);
 
         _currentHealth = _currentHealth + heal > _maxHealth ? _maxHealth : _currentHealth + heal;
     }

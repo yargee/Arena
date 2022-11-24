@@ -1,58 +1,60 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Fighter : MonoBehaviour, IDamagable, IHealable, IFighter
+public class Fighter : MonoBehaviour, IDamagable, IHealable
 {
     [SerializeField] private string _name;
+    [SerializeField] private CombatZone _combatZone;
     [SerializeField] private Characteristics _characteristics;
     [SerializeField] private Health _health;
     [SerializeField] private Weapon _weapon;
     [SerializeField] private Armor _armor;
-    [SerializeField] private CombatZone _combatZone;
 
-    private IAttackable _attackBehaviour;
-    private IDefencable _defenceBehabiour;
+    private float _timeAfterAttack = 0;
+    private Fighter _target;
 
-    public event UnityAction<Fighter, Fighter> TryAttack;
+    public event UnityAction<Fighter, Fighter> Attacking;
 
     public string Name => _name;
     public Weapon Weapon => _weapon;
     public Health Health => _health;
     public Characteristics Characteristics => _characteristics;
-    public IAttackable AttackBehaviour => _attackBehaviour;
-    public IDefencable DefenceBehaviour => _defenceBehabiour;
 
     private void OnEnable()
     {
-        InitBehaviours();
-        _combatZone.Init(_attackBehaviour, Weapon.AtackSpeed);
-        _health.Died += OnDied;
+        _combatZone.TargetFound += OnTargetFound;
+        _combatZone.TargetLost += OnTargetLost;
     }
 
     private void OnDisable()
     {
-        _health.Died -= OnDied;
+        _combatZone.TargetFound -= OnTargetFound;
+        _combatZone.TargetLost -= OnTargetLost;
     }
 
-    public void InitBehaviours()
+    private void Update()
     {
-        _attackBehaviour = new AttackBehaviour();
-        _attackBehaviour.InitFighter(this);
+        if(_target == null)
+        {
+            return;
+        }
 
-        _defenceBehabiour = new DefenceBehaviour();
-        _defenceBehabiour.InitFighter(this);
+        _timeAfterAttack += Time.deltaTime;
+
+        if (TimeToAttack())
+        {
+            Attacking(this, _target);
+        }
     }
 
-    public void Equip(Weapon weapon, Armor armor)
+    private void OnTargetFound(Fighter target)
     {
-        _weapon = weapon;
-        _armor = armor;
+        _target = target;
     }
 
-    private void OnDied()
+    private void OnTargetLost()
     {
-        _combatZone.Stop();
-        Destroy(gameObject);
+        _target = null;
     }
 
     public void TakeDamage(int damage)
@@ -75,5 +77,17 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable, IFighter
         }
 
         _health.GetHeal(heal);
-    }        
+    }
+
+    private bool TimeToAttack()
+    {
+        if (_timeAfterAttack > _weapon.AtackSpeed)
+        {
+            _timeAfterAttack = 0;
+            return true;
+        }
+
+        return false;
+    }
+
 }

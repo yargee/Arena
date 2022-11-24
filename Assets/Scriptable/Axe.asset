@@ -20,4 +20,4 @@ MonoBehaviour:
   _criticalModifier: 5
   _missChance: 10
   _parryChance: 5
-  _twoHanded: 0
+  _twoHanded: 1

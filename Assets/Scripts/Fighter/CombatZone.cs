@@ -1,70 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class CombatZone : MonoBehaviour
 {
-    private float _attackSpeed;
-    private float _timeAfterAttack = 0;
-    private IAttackable _attacker;
-    private IDefencable _defender;
+    private Fighter _enemy;
 
-    private void Update()
-    {
-        if(_attacker == null || _defender == null)
-        {
-            return;
-        }
-
-        _timeAfterAttack += Time.deltaTime;
-
-        if(TimeToAttack())
-        {
-            _attacker.SpeedBasedAttack(_defender);
-        }
-    }
+    public event UnityAction<Fighter> TargetFound;
+    public event UnityAction TargetLost;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log(collision.name);
-
-        if(collision.TryGetComponent(out Fighter defender))
+        if(collision.TryGetComponent(out Fighter enemy))
         {
-            //Debug.Log(defender.name);
-            _defender = defender.DefenceBehaviour;
+            _enemy = enemy;
+            TargetFound?.Invoke(enemy);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IDefencable defender))
+        if (collision.TryGetComponent(out Fighter enemy) && _enemy == enemy)
         {
-            Stop();
+            TargetLost?.Invoke();
         }
-    }
-
-    public void Init(IAttackable attack, float _speed)
-    {
-        _attacker = attack;
-        _attackSpeed = _speed;
-    }
-
-    private bool TimeToAttack()
-    {
-        if(_timeAfterAttack > _attackSpeed)
-        {
-            _timeAfterAttack = 0;
-            return true;
-        }
-
-        return false;
-    }
-
-    public void Stop()
-    {
-        _attacker = null;
-        _defender = null;
     }
 }

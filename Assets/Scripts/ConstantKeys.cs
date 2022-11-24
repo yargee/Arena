@@ -9,14 +9,18 @@ public static class ConstantKeys
     public const float ParryModifier = 0.75f;
     public const float BlockModifier = 0.5f;
 
-    public enum CombatStatus
+    public enum AttackStatus
     {
-        None,
-        Miss,
+        Fail,
         Hit,
-        CriticalHit,
+        CriticalHit
+    }    
+
+    public enum DefenceStatus
+    {
         Evade,
         Parry,
-        Block
-    }    
+        Block,
+        FullDamage
+    }
 }
