@@ -8,11 +8,14 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable, IFighter
     [SerializeField] private Health _health;
     [SerializeField] private Weapon _weapon;
     [SerializeField] private Armor _armor;
-    [SerializeField] private AttackZone _attackZone;
+    [SerializeField] private CombatZone _combatZone;
 
     private IAttackable _attackBehaviour;
     private IDefencable _defenceBehabiour;
 
+    public event UnityAction<Fighter, Fighter> TryAttack;
+
+    public string Name => _name;
     public Weapon Weapon => _weapon;
     public Health Health => _health;
     public Characteristics Characteristics => _characteristics;
@@ -22,7 +25,13 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable, IFighter
     private void OnEnable()
     {
         InitBehaviours();
-        _attackZone.Init(_attackBehaviour, Weapon.AtackSpeed);
+        _combatZone.Init(_attackBehaviour, Weapon.AtackSpeed);
+        _health.Died += OnDied;
+    }
+
+    private void OnDisable()
+    {
+        _health.Died -= OnDied;
     }
 
     public void InitBehaviours()
@@ -40,6 +49,11 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable, IFighter
         _armor = armor;
     }
 
+    private void OnDied()
+    {
+        _combatZone.Stop();
+        Destroy(gameObject);
+    }
 
     public void TakeDamage(int damage)
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class AttackZone : MonoBehaviour
+public class CombatZone : MonoBehaviour
 {
     private float _attackSpeed;
     private float _timeAfterAttack = 0;
@@ -41,7 +41,7 @@ public class AttackZone : MonoBehaviour
     {
         if (collision.TryGetComponent(out IDefencable defender))
         {
-            _defender = null;
+            Stop();
         }
     }
 
@@ -60,5 +60,11 @@ public class AttackZone : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void Stop()
+    {
+        _attacker = null;
+        _defender = null;
     }
 }

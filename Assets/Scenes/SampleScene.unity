@@ -206,6 +206,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1294881726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1294881728}
+  - component: {fileID: 1294881727}
+  m_Layer: 0
+  m_Name: Log container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1294881727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294881726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199e8ea6d91a69e4192c3f51fabaa5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fighters:
+  - {fileID: 2051378613}
+  - {fileID: 1587546417}
+  _logs: []
+--- !u!4 &1294881728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294881726}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5510956, y: 0.057321817, z: -0.41704813}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1587546414
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,9 +266,9 @@ GameObject:
   - component: {fileID: 1587546417}
   - component: {fileID: 1587546416}
   - component: {fileID: 1587546415}
+  - component: {fileID: 1587546420}
   - component: {fileID: 1587546422}
   - component: {fileID: 1587546421}
-  - component: {fileID: 1587546420}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -275,7 +322,7 @@ MonoBehaviour:
   _health: {fileID: 1587546416}
   _weapon: {fileID: 11400000, guid: 436fa29ec9ccf614f87bedecdb139da0, type: 2}
   _armor: {fileID: 0}
-  _attackZone: {fileID: 1587546420}
+  _combatZone: {fileID: 1587546420}
 --- !u!212 &1587546418
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -403,9 +450,9 @@ GameObject:
   - component: {fileID: 2051378613}
   - component: {fileID: 2051378612}
   - component: {fileID: 2051378616}
+  - component: {fileID: 2051378617}
   - component: {fileID: 2051378619}
   - component: {fileID: 2051378618}
-  - component: {fileID: 2051378617}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -444,7 +491,7 @@ MonoBehaviour:
   _health: {fileID: 2051378612}
   _weapon: {fileID: 11400000, guid: 436fa29ec9ccf614f87bedecdb139da0, type: 2}
   _armor: {fileID: 0}
-  _attackZone: {fileID: 2051378617}
+  _combatZone: {fileID: 2051378617}
 --- !u!212 &2051378614
 SpriteRenderer:
   m_ObjectHideFlags: 0

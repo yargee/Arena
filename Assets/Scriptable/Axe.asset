@@ -17,6 +17,7 @@ MonoBehaviour:
   _maxDamage: 60
   _atackSpeed: 4
   _criticalChance: 6
+  _criticalModifier: 5
   _missChance: 10
   _parryChance: 5
   _twoHanded: 0

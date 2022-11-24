@@ -22,24 +22,38 @@ public class AttackBehaviour : IAttackable
         return Random.Range(1, 101) + _attacker.Characteristics.DexterityModifier > _attacker.Weapon.MissChance;
     }
 
-    public void CalculateOutcomingDamage()
+    public ConstantKeys.CombatStatus CalculateOutcomingDamage()
     {
         int weaponDamage = Random.Range(_attacker.Weapon.MinDamage, _attacker.Weapon.MaxDamage + 1);
         _damage = _attacker.Weapon.TwoHanded ? Mathf.RoundToInt((weaponDamage + _attacker.Characteristics.StrenghModifier) * ConstantKeys.TwoHandedWeaponDamageModifier)
                                              : weaponDamage + _attacker.Characteristics.StrenghModifier;
+
+        if(Random.Range(1, 101) < _attacker.Weapon.CriticalChance)
+        {
+            _damage = Mathf.RoundToInt(_damage * _attacker.Weapon.CriticalModifier);
+            return ConstantKeys.CombatStatus.CriticalHit;
+        }
+        else
+        {
+            return ConstantKeys.CombatStatus.Hit;
+        }
     }
 
     public void SpeedBasedAttack(IDefencable defender)
     {
-        if(AttackSuccesfull())
+        if (AttackSuccesfull())
         {
-            CalculateOutcomingDamage();
-            Debug.Log($"Attack {defender} for {_damage} damage");
+            var status = CalculateOutcomingDamage();
+            //Debug.Log($"Attack {defender} for {_damage} damage");
+            defender.GetLog(new Log(_attacker, status, _damage));
             defender.StartDefence(_damage);
+            
         }
         else
         {
-            Debug.Log("Attack missed");
-        }        
+            //Debug.Log("Attack missed");
+            defender.GetLog(new Log(_attacker, ConstantKeys.CombatStatus.Miss));
+            defender.StartDefence(0);
+        }
     }
 }
