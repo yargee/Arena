@@ -26,7 +26,8 @@ public static class ConstantKeys
         Idle,
         Attack,
         Block,
-        Death
+        Death,
+        Evade
     }
 
     public enum DefenceStatus

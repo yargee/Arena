@@ -10,7 +10,6 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     [SerializeField] private Weapon _weapon;
     [SerializeField] private Armor _armor;
     [SerializeField] private Animator _animator;
-    [SerializeField] private List<Fighter> _targets = new List<Fighter>();
 
     private float _timeAfterAttack = 0;
     private Fighter _target;
@@ -24,6 +23,7 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     public Health Health => _health;
     public bool IsDead => _isDead;
     public Characteristics Characteristics => _characteristics;
+    public Fighter Target => _target;
 
     private void OnEnable()
     {
@@ -42,25 +42,7 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
 
     private void Update()
     {
-        if (IsDead) return;
-
-        if (_target.IsDead && !Arena.WinnerFound)
-        {
-            TargetLost?.Invoke(this);
-            return;
-        }
-
-        if(Arena.WinnerFound)
-        {
-            return;
-        }
-
-        _timeAfterAttack += Time.deltaTime;
-
-        if (TimeToAttack())
-        {
-            Attacking(this, _target);
-        }
+        TryAttack();
     }
 
     private void OnDied()
@@ -100,6 +82,29 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
         _target = target;
     }
 
+    private void TryAttack()
+    {
+        if (IsDead) return;
+
+        if (_target.IsDead && !Arena.WinnerFound)
+        {
+            TargetLost?.Invoke(this);
+            return;
+        }
+
+        if (Arena.WinnerFound)
+        {
+            return;
+        }
+
+        _timeAfterAttack += Time.deltaTime;
+
+        if (TimeToAttack())
+        {
+            Attacking?.Invoke(this, _target);
+        }
+    }
+    
     private bool TimeToAttack()
     {
         if (_timeAfterAttack > _weapon.AtackSpeed)

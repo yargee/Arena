@@ -8,8 +8,10 @@ using UnityEngine.Events;
 public class Arena : MonoBehaviour
 {
     [SerializeField] private List<Fighter> _fighters = new List<Fighter>();
+    [SerializeField] private List<Fighter> _team_1 = new List<Fighter>();
+    [SerializeField] private List<Fighter> _team_2 = new List<Fighter>();
     [SerializeField] private LogContainer _logContainer;
-    
+    [SerializeField] private List<AttackableTarget> _attackableTargets = new List<AttackableTarget>();
     public static bool WinnerFound { get; private set; }
 
     private void OnEnable()
@@ -48,9 +50,15 @@ public class Arena : MonoBehaviour
 
     private void OnTargetLost(Fighter fighter)
     {
+        //FindRandomTarget(fighter);
+        FindLessAttackableTarget(fighter);
+    }
+
+    private void FindRandomTarget(Fighter fighter)
+    {
         var availableTargets = _fighters.Where(x => x.IsDead == false && x != fighter);
 
-        if(availableTargets.Count() > 0)
+        if (availableTargets.Count() > 0)
         {
             fighter.SetTarget(availableTargets.ToArray()[UnityEngine.Random.Range(0, availableTargets.Count())]);
         }
@@ -58,6 +66,56 @@ public class Arena : MonoBehaviour
         {
             WinnerFound = true;
         }
+    }
+
+    private void FindLessAttackableTarget(Fighter fighter)
+    {
+        var availableTargets = _fighters.Where(x => x.IsDead == false && x != fighter);
+
+        _attackableTargets = new List<AttackableTarget>();
+
+        foreach(var target in availableTargets)
+        {
+            int attackers = 0;
+
+            foreach(var attacker in availableTargets)
+            {
+                if(attacker.Target == target)
+                {
+                    attackers++;
+                }
+            }
+
+            _attackableTargets.Add(new AttackableTarget(target, attackers));
+        }
+
+        if(_attackableTargets.Count() % 2 != 0)
+        {
+            var lessAttackableTarget = _attackableTargets.OrderBy(target => target.Attackers).ToArray()[0];
+            fighter.SetTarget(lessAttackableTarget.Target);
+        }
+        else if(_attackableTargets.Count() > 0)
+        {
+            FindRandomTarget(fighter);
+        }
+        else
+        {
+            WinnerFound = true;
+        }
+        
+    }
+
+}
+[Serializable]
+public class AttackableTarget
+{
+    public Fighter Target;
+    public int Attackers;
+
+    public AttackableTarget(Fighter target, int attackers)
+    {
+        Target = target;
+        Attackers = attackers;
     }
 }
 
@@ -93,6 +151,7 @@ public class AttackSequence
         else
         {
             outcomingDamage = 0;
+            _defender.SetAnimation(ConstantKeys.Animations.Evade);
             log.UpdateAttackLog(_attacker.Name);
         }
     }
@@ -111,7 +170,7 @@ public class AttackSequence
         {
             log.UpdateDefenceLog(_defender.Name);
             finalDamage = 0;
-            _defender.SetAnimation(ConstantKeys.Animations.Block);
+            _defender.SetAnimation(ConstantKeys.Animations.Evade);
             return;
         }
 
