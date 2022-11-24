@@ -26,7 +26,7 @@ public class Log
         _textLog += _defenceLog;
     }
 
-    public void UpdateDefenceLog(string name, int finishDamage, ConstantKeys.DefenceStatus status = ConstantKeys.DefenceStatus.Block)
+    public void UpdateDefenceLog(string name, int finishDamage, ConstantKeys.DefenceStatus status)
     {
         _defenceLog = $" // {name}_{status}_{finishDamage}";
         _textLog += _defenceLog;

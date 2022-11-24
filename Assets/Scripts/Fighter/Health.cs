@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
+[Serializable]
 public class Health : MonoBehaviour
 {
     [SerializeField] private int _maxHealth;
@@ -14,11 +15,9 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        //Debug.Log("Taking damage " + damage);
+        _currentHealth = _currentHealth - damage;
 
-        _currentHealth = damage >= _currentHealth ? 0 : _currentHealth - damage;
-
-        if (_currentHealth == 0)
+        if (_currentHealth <= 0)
         {
             Died?.Invoke();
         }
@@ -26,8 +25,6 @@ public class Health : MonoBehaviour
 
     public void GetHeal(int heal)
     {
-        //Debug.Log("Healing for " + heal);
-
         _currentHealth = _currentHealth + heal > _maxHealth ? _maxHealth : _currentHealth + heal;
     }
 }
