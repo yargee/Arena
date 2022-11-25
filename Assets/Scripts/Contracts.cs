@@ -12,5 +12,11 @@ public interface IHealable
     public void GetHeal(int heal);
 }
 
+public interface IState
+{
+    public Fighter Fighter { get; }
 
+    public void Enter(Fighter fighter);
+    public void StateLogic();
+}
 

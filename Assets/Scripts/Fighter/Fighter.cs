@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,9 +13,11 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     private float _timeAfterAttack = 0;
     private Fighter _target;
     private bool _isDead;
+    private bool _searchForTarget = false;
 
     public event UnityAction<Fighter, Fighter> Attacking;
     public event UnityAction<Fighter> TargetLost;
+    public event UnityAction<Fighter> TargetFound;
 
     public string Name => _name;
     public Weapon Weapon => _weapon;
@@ -35,14 +36,9 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
         _health.Died -= OnDied;
     }
 
-    private void Start()
-    {
-        TargetLost?.Invoke(this);
-    }
-
     private void Update()
     {
-        TryAttack();
+        Attack();
     }
 
     private void OnDied()
@@ -80,15 +76,18 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     public void SetTarget(Fighter target)
     {
         _target = target;
+        _searchForTarget = false;
+        TargetFound?.Invoke(this);
     }
 
-    private void TryAttack()
+    public void Attack()
     {
         if (IsDead) return;
 
-        if (_target.IsDead && !Arena.WinnerFound)
+        if (_target.IsDead && !Arena.WinnerFound && !_searchForTarget)
         {
-            TargetLost?.Invoke(this);
+            Debug.LogError(Name + " target lost");
+            TargetLost?.Invoke(this);// вызывать 1 раз! bool
             return;
         }
 
@@ -96,6 +95,8 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
         {
             return;
         }
+
+        if (_searchForTarget) return; //make state machine
 
         _timeAfterAttack += Time.deltaTime;
 

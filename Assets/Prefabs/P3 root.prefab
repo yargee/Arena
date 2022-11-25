@@ -177,10 +177,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1e0feda7468a5f46baee145cc9e94ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Yargee
+  _name: Martelo
   _characteristics: {fileID: 1874907709026858825}
   _health: {fileID: 1874907709026858821}
   _weapon: {fileID: 11400000, guid: 436fa29ec9ccf614f87bedecdb139da0, type: 2}
   _armor: {fileID: 0}
   _animator: {fileID: 1874907709026858829}
-  _targets: []

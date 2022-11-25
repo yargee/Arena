@@ -1,37 +1,52 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Arena : MonoBehaviour
 {
+    [SerializeField] private Targeter _targeter;
+    [SerializeField] private Mover _mover;
     [SerializeField] private List<Fighter> _fighters = new List<Fighter>();
-    [SerializeField] private List<Fighter> _team_1 = new List<Fighter>();
-    [SerializeField] private List<Fighter> _team_2 = new List<Fighter>();
     [SerializeField] private LogContainer _logContainer;
-    [SerializeField] private List<AttackableTarget> _attackableTargets = new List<AttackableTarget>();
+
     public static bool WinnerFound { get; private set; }
 
     private void OnEnable()
     {
+        _targeter.Init(_fighters);
+        _targeter.TargetsUnavailable += OnTargetsUnavailable;
+
         foreach (var fighter in _fighters)
         {
             fighter.Attacking += OnTryAttack;
-            fighter.TargetLost += OnTargetLost;
+            fighter.TargetLost += _targeter.TakeAttackerAsTarget;
+            fighter.TargetFound += _mover.MoveToTarget;
         }
     }
 
     private void OnDisable()
     {
+        _targeter.TargetsUnavailable -= OnTargetsUnavailable;
+
         foreach (var fighter in _fighters)
         {
             fighter.Attacking -= OnTryAttack;
-            fighter.TargetLost -= OnTargetLost;
+            fighter.TargetLost -= _targeter.TakeAttackerAsTarget;
+            fighter.TargetFound -= _mover.MoveToTarget;
         }
     }
 
+    private void Start()
+    {
+        foreach (var fighter in _fighters)
+        {
+            _targeter.FindLessAttackableTarget(fighter);
+        }
+    }
+
+    private void OnTargetsUnavailable()
+    {
+        WinnerFound = true;
+    }
     private void OnTryAttack(Fighter attacker, Fighter defender)
     {
         Log log = new Log();
@@ -46,76 +61,6 @@ public class Arena : MonoBehaviour
         }
 
         _logContainer.AddLog(log);
-    }
-
-    private void OnTargetLost(Fighter fighter)
-    {
-        //FindRandomTarget(fighter);
-        FindLessAttackableTarget(fighter);
-    }
-
-    private void FindRandomTarget(Fighter fighter)
-    {
-        var availableTargets = _fighters.Where(x => x.IsDead == false && x != fighter);
-
-        if (availableTargets.Count() > 0)
-        {
-            fighter.SetTarget(availableTargets.ToArray()[UnityEngine.Random.Range(0, availableTargets.Count())]);
-        }
-        else
-        {
-            WinnerFound = true;
-        }
-    }
-
-    private void FindLessAttackableTarget(Fighter fighter)
-    {
-        var availableTargets = _fighters.Where(x => x.IsDead == false && x != fighter);
-
-        _attackableTargets = new List<AttackableTarget>();
-
-        foreach(var target in availableTargets)
-        {
-            int attackers = 0;
-
-            foreach(var attacker in availableTargets)
-            {
-                if(attacker.Target == target)
-                {
-                    attackers++;
-                }
-            }
-
-            _attackableTargets.Add(new AttackableTarget(target, attackers));
-        }
-
-        if(_attackableTargets.Count() % 2 != 0)
-        {
-            var lessAttackableTarget = _attackableTargets.OrderBy(target => target.Attackers).ToArray()[0];
-            fighter.SetTarget(lessAttackableTarget.Target);
-        }
-        else if(_attackableTargets.Count() > 0)
-        {
-            FindRandomTarget(fighter);
-        }
-        else
-        {
-            WinnerFound = true;
-        }
-        
-    }
-
-}
-[Serializable]
-public class AttackableTarget
-{
-    public Fighter Target;
-    public int Attackers;
-
-    public AttackableTarget(Fighter target, int attackers)
-    {
-        Target = target;
-        Attackers = attackers;
     }
 }
 
