@@ -6,6 +6,7 @@ using UnityEngine;
 public class Weapon : ScriptableObject
 {
     [SerializeField] private string _name;
+    [SerializeField] [Range(1, 10)] private float _attackRange; 
     [SerializeField][Range(1,100)] private int _minDamage;
     [SerializeField][Range(2, 200)] private int _maxDamage;
     [SerializeField][Range(1, 10)] private float _atackSpeed;
@@ -16,6 +17,7 @@ public class Weapon : ScriptableObject
     [SerializeField] private bool _twoHanded;
 
     public string Name => _name;
+    public float AttackRange => _attackRange;
     public int MinDamage => _minDamage;
     public int MaxDamage => _maxDamage;
     public float AtackSpeed => _atackSpeed;

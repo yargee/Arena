@@ -28,7 +28,7 @@ public class Targeter : MonoBehaviour
 
     public void FindRandomTarget(Fighter fighter)
     {
-        var availableTargets = _fighters.Where(x => x.IsDead == false && x != fighter);
+        var availableTargets = _fighters.Where(x => !x.Defeated && x != fighter);
 
         if (availableTargets.Count() > 0)
         {
@@ -42,7 +42,7 @@ public class Targeter : MonoBehaviour
 
     public void FindLessAttackableTarget(Fighter fighter)
     {
-        var availableTargets = _fighters.Where(x => x.IsDead == false && x != fighter);
+        var availableTargets = _fighters.Where(x => !x.Defeated && x != fighter);
 
         _attackableTargets = new List<AttackableTarget>();
 
@@ -78,8 +78,8 @@ public class Targeter : MonoBehaviour
 
     public void TakeAttackerAsTarget(Fighter fighter)
     {
-        Debug.LogError("Take attacker as target");
-        var targets = _fighters.Where(x => x != fighter && x.Target == fighter).ToArray();
+        Debug.LogError($"{fighter} Take attacker as target");
+        var targets = _fighters.Where(x => !x.Defeated && x != fighter && x.Target == fighter).ToArray();
 
         if(targets.Count() > 0)
         {

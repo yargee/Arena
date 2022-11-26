@@ -4,7 +4,6 @@ using UnityEngine;
 public class Arena : MonoBehaviour
 {
     [SerializeField] private Targeter _targeter;
-    [SerializeField] private Mover _mover;
     [SerializeField] private List<Fighter> _fighters = new List<Fighter>();
     [SerializeField] private LogContainer _logContainer;
 
@@ -15,12 +14,14 @@ public class Arena : MonoBehaviour
         _targeter.Init(_fighters);
         _targeter.TargetsUnavailable += OnTargetsUnavailable;
 
+        Randomize();
+
         foreach (var fighter in _fighters)
         {
             fighter.Attacking += OnTryAttack;
-            fighter.TargetLost += _targeter.TakeAttackerAsTarget;
-            fighter.TargetFound += _mover.MoveToTarget;
+            fighter.Init(_targeter);
         }
+
     }
 
     private void OnDisable()
@@ -30,8 +31,6 @@ public class Arena : MonoBehaviour
         foreach (var fighter in _fighters)
         {
             fighter.Attacking -= OnTryAttack;
-            fighter.TargetLost -= _targeter.TakeAttackerAsTarget;
-            fighter.TargetFound -= _mover.MoveToTarget;
         }
     }
 
@@ -43,10 +42,22 @@ public class Arena : MonoBehaviour
         }
     }
 
+    private void Randomize()
+    {
+        for (int i = 0; i < _fighters.Count; i++)
+        {
+            int newIndex = Random.Range(0, _fighters.Count);
+            var tempotaryValue = _fighters[newIndex];
+            _fighters[newIndex] = _fighters[i];
+            _fighters[i] = tempotaryValue;
+        }
+    }
+
     private void OnTargetsUnavailable()
     {
         WinnerFound = true;
     }
+
     private void OnTryAttack(Fighter attacker, Fighter defender)
     {
         Log log = new Log();
@@ -79,11 +90,10 @@ public class AttackSequence
     {
         outcomingDamage = 0;
 
-        if (_attacker.IsDead || _defender.IsDead) return;
+        if (_attacker.Defeated || _defender.Defeated) return;
 
         if (CombatCalculator.IsAttackSuccessfull(_attacker.Weapon, _attacker.Characteristics.DexterityModifier))
         {
-            _attacker.SetAnimation(ConstantKeys.Animations.Attack);
             outcomingDamage = CombatCalculator.CalculateBaseDamage(_attacker.Weapon, _attacker.Characteristics.StrenghModifier);
             log.UpdateAttackLog(_attacker.Name, ConstantKeys.AttackStatus.Hit, outcomingDamage);
 
@@ -105,8 +115,9 @@ public class AttackSequence
     {
         finalDamage = 0;
 
-        if (_defender.IsDead)
+        if (_defender.Defeated)
         {
+            _attacker.LoseTarget();
             log.UpdateDefenceLog(_defender.Name, 0, ConstantKeys.DefenceStatus.Dead);
             return;
         }
@@ -140,8 +151,12 @@ public class AttackSequence
 
     public void ApproveDamagePhase(IDamagable defender, int damage)
     {
-        if (_defender.IsDead) return;
-
         defender.TakeDamage(damage);
+
+        if (_defender.Defeated)
+        {
+            _attacker.LoseTarget();
+            return;
+        }
     }
 }

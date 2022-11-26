@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Mace+Shield
   m_EditorClassIdentifier: 
   _name: Mace+Shield
+  _attackRange: 2.5
   _minDamage: 40
   _maxDamage: 80
   _atackSpeed: 3.5

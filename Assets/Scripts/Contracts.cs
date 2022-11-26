@@ -1,4 +1,4 @@
-using UnityEngine.Events;
+using System.Collections.Generic;
 
 public interface IDamagable
 {
@@ -12,11 +12,4 @@ public interface IHealable
     public void GetHeal(int heal);
 }
 
-public interface IState
-{
-    public Fighter Fighter { get; }
-
-    public void Enter(Fighter fighter);
-    public void StateLogic();
-}
 

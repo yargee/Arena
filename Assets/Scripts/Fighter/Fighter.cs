@@ -9,46 +9,52 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     [SerializeField] private Weapon _weapon;
     [SerializeField] private Armor _armor;
     [SerializeField] private Animator _animator;
+    [SerializeField] private FighterStateMachine _stateMachine;
+    [SerializeField] private Targeter _targeter;
 
+    private bool _defeated = false;
     private float _timeAfterAttack = 0;
     private Fighter _target;
-    private bool _isDead;
-    private bool _searchForTarget = false;
 
     public event UnityAction<Fighter, Fighter> Attacking;
-    public event UnityAction<Fighter> TargetLost;
-    public event UnityAction<Fighter> TargetFound;
-
+    public bool Defeated => _defeated;
+    public Targeter Targeter => _targeter;
+    public Animator Animator => _animator;
     public string Name => _name;
     public Weapon Weapon => _weapon;
     public Health Health => _health;
-    public bool IsDead => _isDead;
     public Characteristics Characteristics => _characteristics;
     public Fighter Target => _target;
 
     private void OnEnable()
     {
-        _health.Died += OnDied;
+        _stateMachine.Init(this);
+        _health.Died += Defeat;
     }
 
     private void OnDisable()
     {
-        _health.Died -= OnDied;
+        _health.Died -= Defeat;
     }
 
     private void Update()
     {
-        Attack();
+        _timeAfterAttack += Time.deltaTime;
     }
 
-    private void OnDied()
+    public void Init(Targeter targeter)
     {
-        if (_isDead) return;
-                
-        _isDead = true;
+        _targeter = targeter;
+    }
+
+    public void Defeat()
+    {
         _target = null;
+        _defeated = true;
         transform.SetAsFirstSibling();
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         SetAnimation(ConstantKeys.Animations.Death);
+        _stateMachine.Stop();
     }
 
     public void TakeDamage(int damage)
@@ -76,18 +82,19 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     public void SetTarget(Fighter target)
     {
         _target = target;
-        _searchForTarget = false;
-        TargetFound?.Invoke(this);
+    }
+
+    public void LoseTarget()
+    {
+        _target = null;
     }
 
     public void Attack()
     {
-        if (IsDead) return;
+        if (Defeated) return;
 
-        if (_target.IsDead && !Arena.WinnerFound && !_searchForTarget)
+        if (_target.Defeated && !Arena.WinnerFound)
         {
-            Debug.LogError(Name + " target lost");
-            TargetLost?.Invoke(this);// вызывать 1 раз! bool
             return;
         }
 
@@ -95,10 +102,6 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
         {
             return;
         }
-
-        if (_searchForTarget) return; //make state machine
-
-        _timeAfterAttack += Time.deltaTime;
 
         if (TimeToAttack())
         {
@@ -121,4 +124,5 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     {
         _animator.SetTrigger(key.ToString());
     }
+
 }

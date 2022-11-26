@@ -27,7 +27,8 @@ public static class ConstantKeys
         Attack,
         Block,
         Death,
-        Evade
+        Evade,
+        Move
     }
 
     public enum DefenceStatus
