@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffbe58dd9d7012849bda50421ee19aa6, type: 3}
+  m_Name: hero_12_female-attack
+  m_EditorClassIdentifier: 
+  _name: 1
+  _atlas:
+  - {fileID: 21300000, guid: 20297502dbd61f340afe25f06c218a29, type: 3}
+  - {fileID: 21300000, guid: 79838b42f68d37948b3b6f9e425a6f00, type: 3}
+  - {fileID: 21300000, guid: 7aa4fe59e32bd764f9241811c1592169, type: 3}
+  - {fileID: 21300000, guid: f4541aa2bee7ed24280b1fe636f30376, type: 3}
+  - {fileID: 21300000, guid: 64499ef5f5045e64dba0cd7ae6c977c1, type: 3}
+  - {fileID: 21300000, guid: 51553a7b11585c0408d8bd216db8f35b, type: 3}
+  - {fileID: 21300000, guid: f8b6ef183309f264fb79fa0f1bb93e85, type: 3}
+  - {fileID: 21300000, guid: dc85e23c50061b84f846765e7cf6b6a0, type: 3}
+  - {fileID: 21300000, guid: 542e3c0661a20784a9d558bfec2b403a, type: 3}
+  - {fileID: 21300000, guid: cd9c8a299ec93384980e637563a6795b, type: 3}
+  - {fileID: 21300000, guid: dc222dfa83cbfb946a512a6cacff637f, type: 3}
+  - {fileID: 21300000, guid: b3f10484240c3944098b3bfb893e24c0, type: 3}
+  _frequency: 25
+  _loop: 0

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffbe58dd9d7012849bda50421ee19aa6, type: 3}
+  m_Name: hero_28_male-attack
+  m_EditorClassIdentifier: 
+  _name: 1
+  _atlas:
+  - {fileID: 21300000, guid: 95a6209c812c7b246a2df8a72c41e05f, type: 3}
+  - {fileID: 21300000, guid: e66278c49133f9749a9bd963f85951ae, type: 3}
+  - {fileID: 21300000, guid: cbdeb132fdd648046bf612956935fb95, type: 3}
+  - {fileID: 21300000, guid: 163013fc66e570a43aec1ed4f7cd4654, type: 3}
+  - {fileID: 21300000, guid: 4987d726fd8c35e469032ff1aa0afd35, type: 3}
+  - {fileID: 21300000, guid: 551d7e71638688446acc859dcdcdc9e1, type: 3}
+  - {fileID: 21300000, guid: 010a9be43cc80164b8126cba8148b412, type: 3}
+  - {fileID: 21300000, guid: ffba1e0ad82334f4f8ca3c7d04f077cc, type: 3}
+  - {fileID: 21300000, guid: 465889873a86f6c4daefcb20979fd4f2, type: 3}
+  - {fileID: 21300000, guid: a3f302277bf01af4880cf48fa7e88d8c, type: 3}
+  - {fileID: 21300000, guid: f56df7769bc4f5d43b79b8ac09ee9f5f, type: 3}
+  - {fileID: 21300000, guid: 52c87d8a2cf51134aa91a6659b343f39, type: 3}
+  _frequency: 25
+  _loop: 0

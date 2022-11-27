@@ -6,7 +6,7 @@ public class TargetLostTransition : Transition
 {
     private void Update()
     {
-        if(Fighter.Target == null)
+        if(Fighter.Target == null || Fighter.Target.Defeated)
         {
             NeedTransit = true;
         }

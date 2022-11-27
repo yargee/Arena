@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffbe58dd9d7012849bda50421ee19aa6, type: 3}
+  m_Name: hero_21_female-die
+  m_EditorClassIdentifier: 
+  _name: 3
+  _atlas:
+  - {fileID: 21300000, guid: 5179d1fe54fb47848bf5fc6afb99d542, type: 3}
+  - {fileID: 21300000, guid: dd30bac53f29585458b1a447c3df72c7, type: 3}
+  - {fileID: 21300000, guid: cc68fe9d549db6847bfbeb548b612105, type: 3}
+  - {fileID: 21300000, guid: 6c4852b53872e0c4d8704b22a0794ae0, type: 3}
+  - {fileID: 21300000, guid: 97c9450ec90775f4ea8cb2769a3c6b06, type: 3}
+  - {fileID: 21300000, guid: 14ca38b940ba1c846940a1e935f372ef, type: 3}
+  - {fileID: 21300000, guid: 079c15cbb0d2fd943be7f9bf9370f8ac, type: 3}
+  - {fileID: 21300000, guid: 5e43c64d7cfdf1e46abfc1f4489138d9, type: 3}
+  - {fileID: 21300000, guid: 05c128c9c55624746a1b639c823e5d31, type: 3}
+  - {fileID: 21300000, guid: 9350d984d21440c4799e0b1055d3a12a, type: 3}
+  - {fileID: 21300000, guid: c8136ba35d4b4ba4fad46830ce322e5c, type: 3}
+  - {fileID: 21300000, guid: 91e971b67437b5140aba33a397e068ad, type: 3}
+  _frequency: 25
+  _loop: 0

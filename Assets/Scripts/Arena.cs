@@ -18,7 +18,7 @@ public class Arena : MonoBehaviour
 
         foreach (var fighter in _fighters)
         {
-            fighter.Attacking += OnTryAttack;
+            fighter.Attacking += OnAttacking;
             fighter.Init(_targeter);
         }
 
@@ -30,7 +30,7 @@ public class Arena : MonoBehaviour
 
         foreach (var fighter in _fighters)
         {
-            fighter.Attacking -= OnTryAttack;
+            fighter.Attacking -= OnAttacking;
         }
     }
 
@@ -58,7 +58,7 @@ public class Arena : MonoBehaviour
         WinnerFound = true;
     }
 
-    private void OnTryAttack(Fighter attacker, Fighter defender)
+    private void OnAttacking(Fighter attacker, Fighter defender)
     {
         Log log = new Log();
         var attackSequence = new AttackSequence(attacker, defender);
@@ -106,7 +106,7 @@ public class AttackSequence
         else
         {
             outcomingDamage = 0;
-            _defender.SetAnimation(ConstantKeys.Animations.Evade);
+            _defender.SetAnimation(ConstantKeys.Animations.Block);
             log.UpdateAttackLog(_attacker.Name);
         }
     }
@@ -126,7 +126,7 @@ public class AttackSequence
         {
             log.UpdateDefenceLog(_defender.Name);
             finalDamage = 0;
-            _defender.SetAnimation(ConstantKeys.Animations.Evade);
+            _defender.SetAnimation(ConstantKeys.Animations.Block);
             return;
         }
 

@@ -6,11 +6,28 @@ public class MoveState : State
 
     private void OnEnable()
     {
-        Fighter.SetAnimation(ConstantKeys.Animations.Move);
+        Fighter.SetAnimation(ConstantKeys.Animations.Run, true);
     }
 
     private void Update()
     {
-        Fighter.transform.position =  Vector3.MoveTowards(Fighter.transform.position, Fighter.Target.transform.position, _speed * Time.deltaTime);
+        Move();
     }
+
+    private void Move()
+    {
+        var newPosition = Vector3.MoveTowards(Fighter.transform.position, Fighter.Target.transform.position, _speed * Time.deltaTime);
+
+        Fighter.transform.position = new Vector3(newPosition.x, newPosition.y, newPosition.y);
+
+        if(Fighter.transform.position.x > Fighter.Target.transform.position.x)
+        {
+            Fighter.transform.localScale = new Vector2(1, 1);
+        }    
+        else
+        {
+            Fighter.transform.localScale = new Vector2(-1, 1);
+        }
+    }
+
 }

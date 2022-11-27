@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffbe58dd9d7012849bda50421ee19aa6, type: 3}
+  m_Name: hero_19_female-walk
+  m_EditorClassIdentifier: 
+  _name: 0
+  _atlas:
+  - {fileID: 21300000, guid: 5c60db0a64998d94799d11fbf50690c0, type: 3}
+  - {fileID: 21300000, guid: 1ba86b705d0409f41918ceba38f6a2f4, type: 3}
+  - {fileID: 21300000, guid: 6f459832137e1194ebe6f210da40501c, type: 3}
+  - {fileID: 21300000, guid: cc4f9f1b860367f42a74b792449be781, type: 3}
+  - {fileID: 21300000, guid: 9645b5662867e564395b68aacefe3e92, type: 3}
+  - {fileID: 21300000, guid: 0b9edbaa58e72e24097cd0ac36dbd557, type: 3}
+  - {fileID: 21300000, guid: fdb8ea966bf75254e85608b7b5efc7ed, type: 3}
+  - {fileID: 21300000, guid: d27d4055a500f4f4ea4a82c039fecfc2, type: 3}
+  - {fileID: 21300000, guid: 9bbbed07f99556b40821ea5a247d301d, type: 3}
+  - {fileID: 21300000, guid: 31d1d1d286cba0341b9e2ab37ad5131d, type: 3}
+  - {fileID: 21300000, guid: 7641e7bac2affd74d8883d81a419f495, type: 3}
+  - {fileID: 21300000, guid: 03715d3b2b846d84e8cf1344d2114ba2, type: 3}
+  - {fileID: 21300000, guid: 690e6b5875ed4e64e8d5b8c5a88c80c1, type: 3}
+  - {fileID: 21300000, guid: d2cd51826c6de39469cab7c4adaf5238, type: 3}
+  - {fileID: 21300000, guid: 8b26b68b85a890c4d95c64abf99baa40, type: 3}
+  - {fileID: 21300000, guid: ed9a7df86486f5f4b8325c1712a7b289, type: 3}
+  _frequency: 25
+  _loop: 0

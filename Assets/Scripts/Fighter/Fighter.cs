@@ -8,7 +8,7 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     [SerializeField] private Health _health;
     [SerializeField] private Weapon _weapon;
     [SerializeField] private Armor _armor;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private CustomAnimator _animator;
     [SerializeField] private FighterStateMachine _stateMachine;
     [SerializeField] private Targeter _targeter;
 
@@ -19,7 +19,7 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     public event UnityAction<Fighter, Fighter> Attacking;
     public bool Defeated => _defeated;
     public Targeter Targeter => _targeter;
-    public Animator Animator => _animator;
+    public CustomAnimator Animator => _animator;
     public string Name => _name;
     public Weapon Weapon => _weapon;
     public Health Health => _health;
@@ -29,6 +29,7 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     private void OnEnable()
     {
         _stateMachine.Init(this);
+        SetAnimation(ConstantKeys.Animations.Idle, true);
         _health.Died += Defeat;
     }
 
@@ -52,8 +53,8 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
         _target = null;
         _defeated = true;
         transform.SetAsFirstSibling();
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-        SetAnimation(ConstantKeys.Animations.Death);
+        SetAnimation(ConstantKeys.Animations.Die);
+        Debug.LogError(this.name + " DEFEATED ");
         _stateMachine.Stop();
     }
 
@@ -105,10 +106,12 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
 
         if (TimeToAttack())
         {
+            SetAnimation(ConstantKeys.Animations.Attack, false, () => SetAnimation(ConstantKeys.Animations.Idle, true));
             Attacking?.Invoke(this, _target);
         }
     }
-    
+
+
     private bool TimeToAttack()
     {
         if (_timeAfterAttack > _weapon.AtackSpeed)
@@ -120,9 +123,8 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
         return false;
     }
 
-    public void SetAnimation(ConstantKeys.Animations key)
+    public void SetAnimation(ConstantKeys.Animations name, bool loop = false, UnityAction Callback = null)
     {
-        _animator.SetTrigger(key.ToString());
+        _animator.PlayAnimation(name, Callback, loop);
     }
-
 }

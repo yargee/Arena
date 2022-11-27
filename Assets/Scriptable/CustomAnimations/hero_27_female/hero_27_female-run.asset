@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffbe58dd9d7012849bda50421ee19aa6, type: 3}
+  m_Name: hero_27_female-run
+  m_EditorClassIdentifier: 
+  _name: 4
+  _atlas:
+  - {fileID: 21300000, guid: becd30db7534f10498ad6da99eb71cd9, type: 3}
+  - {fileID: 21300000, guid: c9a9a04eb11dbb44f91a24fbd7cb4e4b, type: 3}
+  - {fileID: 21300000, guid: 1ea41e1998f78c245a898b87ee6b0a53, type: 3}
+  - {fileID: 21300000, guid: 513d0957ad1eae248931aa395e359a54, type: 3}
+  - {fileID: 21300000, guid: 37768f3ac4e64a04e846c99eff42eb06, type: 3}
+  - {fileID: 21300000, guid: cd9a6cc05f84a01448632632f0bc9055, type: 3}
+  - {fileID: 21300000, guid: b17e2e41d9f3e4a449071e4c8b900e2d, type: 3}
+  - {fileID: 21300000, guid: 1d42ad7e3362a4640af94b7242ead0b0, type: 3}
+  - {fileID: 21300000, guid: 8139a361dffc3d449a368be02307f2da, type: 3}
+  - {fileID: 21300000, guid: 41b1c9958e6e6ed4693431b1644d3cda, type: 3}
+  - {fileID: 21300000, guid: 59240f6cecb729741a76458e1a1ba186, type: 3}
+  - {fileID: 21300000, guid: 5533f46848a19664bab8ed25d7c07747, type: 3}
+  - {fileID: 21300000, guid: adb9aa7bb60ada445adebf070f0c0fc2, type: 3}
+  - {fileID: 21300000, guid: b1cf3cef66d561b4888908a1c4240c1f, type: 3}
+  - {fileID: 21300000, guid: fb5553c9600f9b140be831fdd0203385, type: 3}
+  - {fileID: 21300000, guid: ec44173bc1b54eb42a7a60a48f5a6375, type: 3}
+  _frequency: 25
+  _loop: 0
