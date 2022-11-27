@@ -78,17 +78,17 @@ public class Targeter : MonoBehaviour
 
     public void TakeAttackerAsTarget(Fighter fighter)
     {
-        Debug.LogError($"{fighter} Take attacker as target");
+        //Debug.LogError($"{fighter} Take attacker as target");
         var targets = _fighters.Where(x => !x.Defeated && x != fighter && x.Target == fighter).ToArray();
 
         if(targets.Count() > 0)
         {
-            Debug.LogError("Taken attacker");
+            //Debug.LogError("Taken attacker");
             fighter.SetTarget(targets[UnityEngine.Random.Range(0, targets.Count())]);
         }
         else
         {
-            Debug.LogError("No attackers, find random");
+            //Debug.LogError("No attackers, find random");
             FindLessAttackableTarget(fighter);
         }
     }

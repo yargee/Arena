@@ -18,7 +18,7 @@ public class CustomAnimator : MonoBehaviour
     {
         var animation = _availableAnimations.FirstOrDefault(x => x.Name == name);
 
-        Debug.Log(animation + " / " + name);
+        //Debug.Log(animation + " / " + name);
 
         animation.SetLoop(loop);
 

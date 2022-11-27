@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Mace+Shield
   m_EditorClassIdentifier: 
   _name: Mace+Shield
-  _attackRange: 3
+  _attackRange: 2
   _minDamage: 40
-  _maxDamage: 80
-  _atackSpeed: 3.5
-  _criticalChance: 5
-  _criticalModifier: 3
+  _maxDamage: 110
+  _atackSpeed: 1.8
+  _criticalChance: 13
+  _criticalModifier: 4
   _missChance: 10
   _parryChance: 5
   _twoHanded: 0

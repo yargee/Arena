@@ -3,32 +3,37 @@ using UnityEngine;
 
 public class Arena : MonoBehaviour
 {
+    [SerializeField] [Range(2, 60)] int _fightersNumber;
     [SerializeField] private Targeter _targeter;
-    [SerializeField] private List<Fighter> _fighters = new List<Fighter>();
+    [SerializeField] private List<Fighter> _availableFighters = new List<Fighter>();    
     [SerializeField] private LogContainer _logContainer;
+    [SerializeField] private DamageViewer _damageViewer;
+
+    private List<Fighter> _chosenFighters = new List<Fighter>();
 
     public static bool WinnerFound { get; private set; }
 
     private void OnEnable()
     {
-        _targeter.Init(_fighters);
+        ChooseFighters();
+
+        _targeter.Init(_chosenFighters);
         _targeter.TargetsUnavailable += OnTargetsUnavailable;
 
         Randomize();
 
-        foreach (var fighter in _fighters)
+        foreach (var fighter in _chosenFighters)
         {
             fighter.Attacking += OnAttacking;
             fighter.Init(_targeter);
         }
-
     }
 
     private void OnDisable()
     {
         _targeter.TargetsUnavailable -= OnTargetsUnavailable;
 
-        foreach (var fighter in _fighters)
+        foreach (var fighter in _chosenFighters)
         {
             fighter.Attacking -= OnAttacking;
         }
@@ -36,7 +41,7 @@ public class Arena : MonoBehaviour
 
     private void Start()
     {
-        foreach (var fighter in _fighters)
+        foreach (var fighter in _chosenFighters)
         {
             _targeter.FindLessAttackableTarget(fighter);
         }
@@ -44,12 +49,12 @@ public class Arena : MonoBehaviour
 
     private void Randomize()
     {
-        for (int i = 0; i < _fighters.Count; i++)
+        for (int i = 0; i < _chosenFighters.Count; i++)
         {
-            int newIndex = Random.Range(0, _fighters.Count);
-            var tempotaryValue = _fighters[newIndex];
-            _fighters[newIndex] = _fighters[i];
-            _fighters[i] = tempotaryValue;
+            int newIndex = Random.Range(0, _chosenFighters.Count);
+            var tempotaryValue = _chosenFighters[newIndex];
+            _chosenFighters[newIndex] = _chosenFighters[i];
+            _chosenFighters[i] = tempotaryValue;
         }
     }
 
@@ -68,10 +73,30 @@ public class Arena : MonoBehaviour
         if (damage > 0)
         {
             attackSequence.DefencePhase(ref log, damage, out int finalDamage);
-            attackSequence.ApproveDamagePhase(defender, finalDamage);
+            attackSequence.ApproveDamagePhase(finalDamage);
+
+            _damageViewer.ShowDamage(finalDamage, defender.transform.position);
         }
 
         _logContainer.AddLog(log);
+    }
+
+    private void ChooseFighters()
+    {
+        for(int i = 0; i < _fightersNumber; i++)
+        {
+            var fighter = _availableFighters[Random.Range(0, _availableFighters.Count)];
+
+            if(!_chosenFighters.Contains(fighter))
+            {
+                _chosenFighters.Add(fighter);
+                fighter.gameObject.SetActive(true);
+            }
+            else
+            {
+                i--;
+            }
+        }
     }
 }
 
@@ -149,9 +174,9 @@ public class AttackSequence
         log.UpdateDefenceLog(_defender.Name, finalDamage, ConstantKeys.DefenceStatus.FullDamage);
     }
 
-    public void ApproveDamagePhase(IDamagable defender, int damage)
+    public void ApproveDamagePhase(int damage)
     {
-        defender.TakeDamage(damage);
+        _defender.TakeDamage(damage - _defender.Characteristics.ConstitutionModifier);
 
         if (_defender.Defeated)
         {

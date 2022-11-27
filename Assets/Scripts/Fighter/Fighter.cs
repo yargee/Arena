@@ -114,7 +114,7 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
 
     private bool TimeToAttack()
     {
-        if (_timeAfterAttack > _weapon.AtackSpeed)
+        if (_timeAfterAttack > _weapon.AtackSpeed - (_characteristics.DexterityModifier + _characteristics.StrenghModifier)/10)
         {
             _timeAfterAttack = 0;
             return true;

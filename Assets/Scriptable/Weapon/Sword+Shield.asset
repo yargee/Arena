@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Sword+Shield
   m_EditorClassIdentifier: 
   _name: Sword+Shield
-  _attackRange: 3
+  _attackRange: 2
   _minDamage: 30
   _maxDamage: 60
-  _atackSpeed: 2.5
-  _criticalChance: 7
-  _criticalModifier: 2.5
+  _atackSpeed: 1.4
+  _criticalChance: 15
+  _criticalModifier: 3
   _missChance: 10
   _parryChance: 5
   _twoHanded: 0

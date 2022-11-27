@@ -9,7 +9,7 @@ public class Weapon : ScriptableObject
     [SerializeField] [Range(1, 10)] private float _attackRange; 
     [SerializeField][Range(1,100)] private int _minDamage;
     [SerializeField][Range(2, 200)] private int _maxDamage;
-    [SerializeField][Range(1, 10)] private float _atackSpeed;
+    [SerializeField][Range(1, 5)] private float _atackSpeed;
     [SerializeField][Range(1, 20)] private int _criticalChance;
     [SerializeField][Range(1.5f, 5)] private float _criticalModifier;
     [SerializeField][Range(5, 20)] private int _missChance;

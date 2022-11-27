@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Axe+Shield
   m_EditorClassIdentifier: 
   _name: Axe+Shield
-  _attackRange: 3
+  _attackRange: 2
   _minDamage: 35
-  _maxDamage: 70
-  _atackSpeed: 3
-  _criticalChance: 6
-  _criticalModifier: 2.7
+  _maxDamage: 100
+  _atackSpeed: 1.6
+  _criticalChance: 14
+  _criticalModifier: 3.5
   _missChance: 10
   _parryChance: 5
   _twoHanded: 0
