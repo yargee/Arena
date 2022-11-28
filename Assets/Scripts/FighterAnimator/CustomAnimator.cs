@@ -8,6 +8,8 @@ public class CustomAnimator : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private CustomAnimation[] _availableAnimations;
 
+    public SpriteRenderer Renderer => _spriteRenderer;
+
     public void PlayAnimation(ConstantKeys.Animations name, UnityAction Callback, bool loop = false)
     {
         StopAllCoroutines();
