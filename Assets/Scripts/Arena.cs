@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Arena : MonoBehaviour
@@ -10,8 +11,14 @@ public class Arena : MonoBehaviour
     [SerializeField] private DamageViewer _damageViewer;
 
     private List<Fighter> _chosenFighters = new List<Fighter>();
+    private Fighter _player;
 
     public static bool WinnerFound { get; private set; }
+
+    private void Awake()
+    {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+    }
 
     private void OnEnable()
     {
@@ -83,6 +90,18 @@ public class Arena : MonoBehaviour
 
     private void ChooseFighters()
     {
+        InitMode();
+        InitPlayer();
+
+        if(_player != null)
+        {
+            var player = _availableFighters.FirstOrDefault(x => x.Name == _player.Name);
+            _chosenFighters.Add(player);
+            player.gameObject.SetActive(true);
+            _fightersNumber--;
+        }
+        
+
         for(int i = 0; i < _fightersNumber; i++)
         {
             var fighter = _availableFighters[Random.Range(0, _availableFighters.Count)];
@@ -96,6 +115,25 @@ public class Arena : MonoBehaviour
             {
                 i--;
             }
+        }
+    }
+
+    private void InitMode()
+    {
+        _fightersNumber = PlayerPrefs.GetInt("ArenaMode");
+    }
+
+    private void InitPlayer()
+    {
+        var data = new PlayerData().Load();
+
+        if(data != null)
+        {
+            _player = data.View;
+        }
+        else
+        {
+            Debug.LogError("Player data is null");
         }
     }
 }

@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
+[Serializable]
 public class Fighter : MonoBehaviour, IDamagable, IHealable
 {
     [SerializeField] private string _name;

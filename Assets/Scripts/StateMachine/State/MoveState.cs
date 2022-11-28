@@ -22,11 +22,11 @@ public class MoveState : State
 
         if(Fighter.transform.position.x > Fighter.Target.transform.position.x)
         {
-            Fighter.transform.localScale = new Vector2(1, 1);
+            Fighter.Animator.transform.localScale = new Vector2(-1, 1);
         }    
         else
         {
-            Fighter.transform.localScale = new Vector2(-1, 1);
+            Fighter.Animator.transform.localScale = new Vector2(1, 1);
         }
     }
 

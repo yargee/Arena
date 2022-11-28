@@ -14,6 +14,12 @@ public static class ConstantKeys
     public const string Block = nameof(Block);
     public const string Death = nameof(Death);
 
+    public enum Modes
+    {
+        Solo,
+        Shuffle,
+        Carnage
+    }
     public enum AttackStatus
     {
         Fail,

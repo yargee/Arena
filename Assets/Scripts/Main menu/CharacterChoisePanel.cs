@@ -87,6 +87,10 @@ public class CharacterChoisePanel : MonoBehaviour
 
     private void Approve()
     {
+        var player = _fighters[_index];
+
+        var data = new PlayerData(player.Name, player);
+        data.Save();
         transform.DOLocalMoveY(2500, 3);
         ShowMenu();
     }

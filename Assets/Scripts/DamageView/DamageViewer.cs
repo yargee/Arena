@@ -28,7 +28,7 @@ public class DamageViewer : MonoBehaviour
         template.color = Color.Lerp(Color.yellow, Color.red, damage / 70);
         template.transform.position = pos;
         template.gameObject.SetActive(true);
-        template.transform.DOLocalMoveY(pos.y + 2, 2).OnComplete(() => ReturnTemplate(template));
+        template.transform.DOMoveY(pos.y + 100, 1.5f).OnComplete(() => ReturnTemplate(template));
         template.DOColor(Color.clear, 3);
     }
 
