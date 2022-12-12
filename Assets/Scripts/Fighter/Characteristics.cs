@@ -14,22 +14,18 @@ public class Characteristics : MonoBehaviour
 
     private void OnEnable()
     {
-       // Randomize();
+       Randomize();
     }
 
     private int CalculateModifier(int value)
     {
-        return Mathf.CeilToInt(Mathf.Abs(value - 10) / 2);
+        return Mathf.CeilToInt((value - 10) / 2);
     }
+
     private void Randomize()
     {
         _strength = UnityEngine.Random.Range(6, 21);
         _dexterity = UnityEngine.Random.Range(6, 21);
         _constitution = UnityEngine.Random.Range(6, 21);
-    }
-
-    public void Load()
-    {
-
     }
 }

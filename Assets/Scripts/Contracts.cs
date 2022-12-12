@@ -17,4 +17,18 @@ public interface IMovementInputSource
     public Vector2 MovementInput { get; }
 }
 
+public interface IAttackableTarget
+{
+    public IAttackableTarget Target { get; }
+    public string Name { get; }
+    public bool IsAlive { get; }
+    public Vector2 Position { get; }
+
+    public void TakeAttack(int damage);
+}
+
+public interface IWeapon
+{
+    public int CalculateDamage();
+}
 

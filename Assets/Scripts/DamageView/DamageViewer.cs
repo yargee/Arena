@@ -36,6 +36,5 @@ public class DamageViewer : MonoBehaviour
     {
         template.gameObject.SetActive(false);
         _templatesPool.Enqueue(template);
-
     }
 }

@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
+    private IAttackableTarget _target;
+
     public void MoveToTarget(Fighter fighter)
     {
-        if(fighter.transform.position != fighter.Target.transform.position)
+        if((Vector2)transform.position != _target.Position)
         {
            // fighter.transform.position = fighter.Target.transform.position;
         }

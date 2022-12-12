@@ -3,10 +3,10 @@ using System.Linq;
 using UnityEngine;
 
 public class Arena : MonoBehaviour
-{
+{/*
     [SerializeField] [Range(2, 60)] int _fightersNumber;
     [SerializeField] private Targeter _targeter;
-    [SerializeField] private List<Fighter> _availableFighters = new List<Fighter>();    
+    [SerializeField] private List<Fighter> _availableFighters = new List<Fighter>();
     [SerializeField] private LogContainer _logContainer;
     [SerializeField] private DamageViewer _damageViewer;
 
@@ -68,12 +68,12 @@ public class Arena : MonoBehaviour
     private void OnTargetsUnavailable(Fighter winner)
     {
         WinnerFound = true;
-
+        /*
         Debug.Log($"No targets { winner.Name} ?= {_player.Name}");
 
         if(winner.Name == _player.Name)
         {
-            winner.Level.LevelUp();
+           // winner.Level.LevelUp();
         }
     }
 
@@ -104,9 +104,9 @@ public class Arena : MonoBehaviour
         {
             var player = _availableFighters.FirstOrDefault(x => x.Name == _player.Name);
             _chosenFighters.Add(player);
-            var health= player.Health.Config.LoadHealth();
-            player.Health.SetHealth(health);
-            player.Health.InitView();
+         //   var health= player.Health.Config.LoadHealth();
+           // player.Health.SetHealth(health);
+         //   player.Health.InitView();
             player.gameObject.SetActive(true);
             _fightersNumber--;
         }
@@ -119,7 +119,7 @@ public class Arena : MonoBehaviour
             if(!_chosenFighters.Contains(fighter))
             {
                 _chosenFighters.Add(fighter);
-                fighter.Health.InitView();
+            //    fighter.Health.InitView();
                 fighter.gameObject.SetActive(true);
             }
             else
@@ -146,91 +146,5 @@ public class Arena : MonoBehaviour
         {
             Debug.LogError("Player data is null");
         }
-    }
-}
-
-public class AttackSequence
-{
-    private Fighter _attacker;
-    private Fighter _defender;
-
-    public AttackSequence(Fighter attacker, Fighter defender)
-    {
-        _attacker = attacker;
-        _defender = defender;
-    }
-
-    public void AttackPhase(ref Log log, out int outcomingDamage)
-    {
-        outcomingDamage = 0;
-
-        if (_attacker.Defeated || _defender.Defeated) return;
-
-        if (CombatCalculator.IsAttackSuccessfull(_attacker.Weapon, _attacker.Characteristics.DexterityModifier))
-        {
-            outcomingDamage = CombatCalculator.CalculateBaseDamage(_attacker.Weapon, _attacker.Characteristics.StrenghModifier);
-            log.UpdateAttackLog(_attacker.Name, ConstantKeys.AttackStatus.Hit, outcomingDamage);
-
-            if (CombatCalculator.IsCriticalStrike(_attacker.Weapon, _attacker.Characteristics.DexterityModifier))
-            {
-                outcomingDamage = CombatCalculator.CalculateCriticalDamage(_attacker.Weapon, outcomingDamage);
-                log.UpdateAttackLog(_attacker.Name, ConstantKeys.AttackStatus.CriticalHit, outcomingDamage);
-            }
-        }
-        else
-        {
-            outcomingDamage = 0;
-            _defender.SetAnimation(ConstantKeys.Animations.Block);
-            log.UpdateAttackLog(_attacker.Name);
-        }
-    }
-
-    public void DefencePhase(ref Log log, int incomingDamage, out int finalDamage)
-    {
-        finalDamage = 0;
-
-        if (_defender.Defeated)
-        {
-            _attacker.LoseTarget();
-            log.UpdateDefenceLog(_defender.Name, 0, ConstantKeys.DefenceStatus.Dead);
-            return;
-        }
-
-        if (CombatCalculator.IsAttackEvaded(_defender.Characteristics.DexterityModifier))
-        {
-            log.UpdateDefenceLog(_defender.Name);
-            finalDamage = 0;
-            _defender.SetAnimation(ConstantKeys.Animations.Block);
-            return;
-        }
-
-        if (_defender.Weapon.TwoHanded && CombatCalculator.IsAttackParried(_defender.Weapon, _defender.Characteristics.StrenghModifier))
-        {
-            finalDamage = CombatCalculator.CalculateParriedAttackDamage(incomingDamage);
-            log.UpdateDefenceLog(_defender.Name, finalDamage, ConstantKeys.DefenceStatus.Parry);
-            return;
-        }
-
-        if(!_defender.Weapon.TwoHanded && CombatCalculator.IsAttackBlocked(_defender.Characteristics.StrenghModifier))
-        {
-            finalDamage = CombatCalculator.CalculateBlockedAttackDamage(incomingDamage);
-            log.UpdateDefenceLog(_defender.Name, finalDamage, ConstantKeys.DefenceStatus.Block);
-            _defender.SetAnimation(ConstantKeys.Animations.Block);
-            return;
-        }
-
-        finalDamage = incomingDamage;
-        log.UpdateDefenceLog(_defender.Name, finalDamage, ConstantKeys.DefenceStatus.FullDamage);
-    }
-
-    public void ApproveDamagePhase(int damage)
-    {
-        _defender.TakeDamage(damage - _defender.Characteristics.ConstitutionModifier);
-
-        if (_defender.Defeated)
-        {
-            _attacker.LoseTarget();
-            return;
-        }
-    }
+    }*/
 }

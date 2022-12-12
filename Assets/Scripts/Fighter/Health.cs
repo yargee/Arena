@@ -6,16 +6,14 @@ using UnityEngine.UI;
 [Serializable]
 public class Health : MonoBehaviour
 {
-    [SerializeField] private HealthConfig _config;
-    [SerializeField] private int _maxHealth;
-    [SerializeField] private int _currentHealth;
+    [SerializeField] private int _maxHealth = 100;
+    [SerializeField] private int _currentHealth = 100;
     [SerializeField] private Slider _healthView;
 
     public event UnityAction Died;
 
     public int MaxHealth => _maxHealth;
     public int CurrentHealth => _currentHealth;
-    public HealthConfig Config => _config;
 
     private void Awake()
     {
