@@ -4,7 +4,6 @@ public class Attack : CombatBehaviour
 {
     private IAttackableTarget _target;
     private float _timeAfterAttack = 0;
-
     public bool HasTarget => _target != null;
 
     private void Update()
@@ -24,10 +23,7 @@ public class Attack : CombatBehaviour
 
     public void AttackTarget()
     {
-        if (_target != null && TimeToAttack())
-        {
-            _target.TakeAttack(CalculateDamage());
-        }
+        _target.TakeAttack(CalculateDamage());
     }
 
     public int CalculateDamage()
@@ -41,6 +37,7 @@ public class Attack : CombatBehaviour
             if (TryCriticalStrike())
             {
                 damage = Mathf.RoundToInt(damage * Weapon.CriticalModifier);
+                Debug.Log("CRITICAL " + damage);
             }
 
             return damage;
@@ -60,10 +57,10 @@ public class Attack : CombatBehaviour
     {
         return Random.Range(1, 101) <= Weapon.CriticalChance + Characteristics.DexterityModifier;
     }
-    
-    private bool TimeToAttack()
+
+    public bool TimeToAttack()
     {
-        if (_timeAfterAttack > Weapon.AtackSpeed - (Characteristics.DexterityModifier + Characteristics.StrenghModifier) / 10)
+        if (_timeAfterAttack > Weapon.AtackSpeed - (float)(Characteristics.DexterityModifier + Characteristics.StrenghModifier) / 10)
         {
             _timeAfterAttack = 0;
             return true;

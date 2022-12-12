@@ -6,23 +6,12 @@ using UnityEngine.Events;
 
 public class Targeter : MonoBehaviour
 {
-    [SerializeField] private List<Fighter> _targets = new List<Fighter>();
-
-    private Queue<Fighter> _waitForTargetQueue = new Queue<Fighter>();
-
-    public event UnityAction<Fighter> TargetsUnavailable;
-
-    private void Update()
-    {
-        if (_waitForTargetQueue.Count == 0) return;
-
-        var fighter = _waitForTargetQueue.Dequeue();
-        TakeAttackerAsTarget(fighter);
-    }
-
+    [SerializeField] private List<Fighter> _fighters = new List<Fighter>();
+    [SerializeField] private List<AttackableTarget> _attackableTargets = new List<AttackableTarget>();
+    
     public void FindRandomTarget(Fighter fighter)
     {
-        var availableTargets = _targets.Where(x => !x.IsAlive && x != fighter);
+        var availableTargets = _fighters.Where(x => x.IsActive && x != fighter);
 
         if (availableTargets.Count() > 0)
         {
@@ -30,15 +19,14 @@ public class Targeter : MonoBehaviour
         }
         else
         {
-            TargetsUnavailable?.Invoke(fighter);
+            fighter.StopFighting();
         }
     }
 
-    public void FindLessAttackableTarget(Fighter fighter)
+    public bool TryFindTarget(Fighter fighter)
     {
-        var availableTargets = _targets.Where(x => !x.IsAlive && x != fighter);
-
-        var _attackableTargets = new List<AttackableTarget>();
+        var availableTargets = _fighters.Where(x => x.IsActive && x != fighter);
+        _attackableTargets.Clear();
 
         foreach (var target in availableTargets)
         {
@@ -59,20 +47,23 @@ public class Targeter : MonoBehaviour
         {
             var lessAttackableTarget = _attackableTargets.OrderBy(target => target.Attackers).ToArray()[0];
             fighter.SetTarget(lessAttackableTarget.Target);
+            return true;
         }
         else if (_attackableTargets.Count() > 0)
         {
             FindRandomTarget(fighter);
+            return true;
         }
         else
         {
-            TargetsUnavailable?.Invoke(fighter);
+            fighter.StopFighting();
+            return false;
         }
     }
 
     public void TakeAttackerAsTarget(Fighter fighter)
     {
-        var targets = _targets.Where(x => !x.IsAlive && x != fighter && x.Target.Name == fighter.Name).ToArray();
+        var targets = _fighters.Where(x => x.IsActive && x != fighter && x.Target.Name == fighter.Name).ToArray();
 
         if (targets.Count() > 0)
         {
@@ -80,7 +71,7 @@ public class Targeter : MonoBehaviour
         }
         else
         {
-            FindLessAttackableTarget(fighter);
+            TryFindTarget(fighter);
         }
     }
 }
@@ -88,10 +79,10 @@ public class Targeter : MonoBehaviour
 [Serializable]
 public class AttackableTarget
 {
-    public IAttackableTarget Target;
+    public Fighter Target;
     public int Attackers;
 
-    public AttackableTarget(IAttackableTarget target, int attackers)
+    public AttackableTarget(Fighter target, int attackers)
     {
         Target = target;
         Attackers = attackers;

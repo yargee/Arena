@@ -1,30 +1,16 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Health))]
 public class Defence : CombatBehaviour, IDamagable
 {
-    private Health _health;
+    [SerializeField] private Health _health;
 
     public Health Health => _health;
-
-    public bool IsAlive { get; private set; }
 
     public event UnityAction Evaded;
     public event UnityAction Blocked;
     public event UnityAction Parried;
     public event UnityAction Defeated;
-
-    private void OnEnable()
-    {
-        _health = GetComponent<Health>();
-        _health.Died += OnDied;
-    }
-
-    private void OnDisable()
-    {
-        _health.Died -= OnDied;
-    }
 
     public void TakeDamage(int damage)
     {
@@ -34,7 +20,7 @@ public class Defence : CombatBehaviour, IDamagable
         {
             return;
         }
-
+        Debug.Log("FINAL " + modifiedDamage);
         _health.TakeDamage(modifiedDamage);
     }
 
@@ -58,27 +44,25 @@ public class Defence : CombatBehaviour, IDamagable
         if (TryEvade())
         {
             Evaded?.Invoke();
+            Debug.Log("EVADED" );
             return 0;
         }
 
         if (TryParry())
         {
             Parried?.Invoke();
+            Debug.Log("PARRIED " + damage);
             return Mathf.RoundToInt(damage * ConstantKeys.ParryModifier) - Characteristics.ConstitutionModifier;
         }
 
         if (TryBlock())
         {
             Blocked?.Invoke();
+            Debug.Log("BLOCKED " + damage);
             return Mathf.RoundToInt(damage * ConstantKeys.BlockModifier) - Characteristics.ConstitutionModifier;
         }
 
         return damage;
     }
 
-    private void OnDied()
-    {
-        IsAlive = false;
-        Defeated?.Invoke();
-    }
 }

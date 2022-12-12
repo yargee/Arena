@@ -10,8 +10,9 @@ public class CustomAnimator : MonoBehaviour
 
     public SpriteRenderer Renderer => _spriteRenderer;
 
-    public void PlayAnimation(ConstantKeys.Animations name, UnityAction Callback, bool loop = false)
+    public void PlayAnimation(ConstantKeys.Animations name, UnityAction Callback = null, bool loop = false)
     {
+        Debug.Log(_spriteRenderer.gameObject.transform.parent.name + " / " + name);
         StopAllCoroutines();
         StartCoroutine(StartAnimation(name, Callback, loop));
     }
