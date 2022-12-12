@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class FighterStateMachine : MonoBehaviour
 {
-    [SerializeField] private Fighter _fighter;
     [SerializeField] private State _firstState;
 
     private State _currentState;
+    private Fighter _fighter;
 
     public State CurrentState => _currentState;
 

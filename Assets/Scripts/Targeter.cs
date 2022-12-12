@@ -11,7 +11,7 @@ public class Targeter : MonoBehaviour
     private IReadOnlyList<Fighter> _fighters;
     private Queue<Fighter> _waitForTargetQueue = new Queue<Fighter>();
 
-    public event UnityAction TargetsUnavailable;
+    public event UnityAction<Fighter> TargetsUnavailable;
 
     private void Update()
     {
@@ -36,7 +36,7 @@ public class Targeter : MonoBehaviour
         }
         else
         {
-            TargetsUnavailable?.Invoke();
+            TargetsUnavailable?.Invoke(fighter);
         }
     }
 
@@ -72,7 +72,7 @@ public class Targeter : MonoBehaviour
         }
         else
         {
-            TargetsUnavailable?.Invoke();
+            TargetsUnavailable?.Invoke(fighter);
         }
     } 
 

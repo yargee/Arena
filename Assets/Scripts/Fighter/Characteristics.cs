@@ -14,7 +14,7 @@ public class Characteristics : MonoBehaviour
 
     private void OnEnable()
     {
-        Randomize();
+       // Randomize();
     }
 
     private int CalculateModifier(int value)

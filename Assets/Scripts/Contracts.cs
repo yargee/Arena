@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using UnityEngine;
 
 public interface IDamagable
 {
@@ -10,6 +10,11 @@ public interface IHealable
 {
     public Health Health { get; }
     public void GetHeal(int heal);
+}
+
+public interface IMovementInputSource
+{
+    public Vector2 MovementInput { get; }
 }
 
 

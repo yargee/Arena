@@ -65,9 +65,16 @@ public class Arena : MonoBehaviour
         }
     }
 
-    private void OnTargetsUnavailable()
+    private void OnTargetsUnavailable(Fighter winner)
     {
         WinnerFound = true;
+
+        Debug.Log($"No targets { winner.Name} ?= {_player.Name}");
+
+        if(winner.Name == _player.Name)
+        {
+            winner.Level.LevelUp();
+        }
     }
 
     private void OnAttacking(Fighter attacker, Fighter defender)
@@ -97,6 +104,9 @@ public class Arena : MonoBehaviour
         {
             var player = _availableFighters.FirstOrDefault(x => x.Name == _player.Name);
             _chosenFighters.Add(player);
+            var health= player.Health.Config.LoadHealth();
+            player.Health.SetHealth(health);
+            player.Health.InitView();
             player.gameObject.SetActive(true);
             _fightersNumber--;
         }
@@ -109,6 +119,7 @@ public class Arena : MonoBehaviour
             if(!_chosenFighters.Contains(fighter))
             {
                 _chosenFighters.Add(fighter);
+                fighter.Health.InitView();
                 fighter.gameObject.SetActive(true);
             }
             else
@@ -129,7 +140,7 @@ public class Arena : MonoBehaviour
 
         if(data != null)
         {
-            _player = data.View;
+            _player = data.Fighter;
         }
         else
         {

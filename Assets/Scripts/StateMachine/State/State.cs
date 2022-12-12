@@ -14,7 +14,7 @@ public abstract class State : MonoBehaviour
     {
         if(!enabled)
         {
-            Debug.Log("Enter state  " + fighter);
+           // Debug.Log("Enter state  " + fighter);
 
             _fighter = fighter;
             enabled = true;

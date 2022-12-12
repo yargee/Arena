@@ -5,30 +5,49 @@ using UnityEngine;
 public class PlayerData
 {
     [SerializeField] private string _name;
-    [SerializeField] private Fighter _view;
+    [SerializeField] private Fighter _fighter;
+    [SerializeField] private int _level;
+    [SerializeField] private int _bonusHealth;
 
     public string Name => _name;
-    public Fighter View => _view;
+    public Fighter Fighter => _fighter;
+    public int Health => _bonusHealth;
 
-    public PlayerData(string name, Fighter view)
+    public PlayerData(string name, Fighter fighter)
     {
         _name = name;
-        _view = view;
+        _fighter = fighter;
+        _level = 0;
+        _bonusHealth = 0;
     }
 
     public PlayerData() { }
 
     public void Save()
     {
-        var data = new PlayerData(_name, _view);
-        var dataToJson = JsonUtility.ToJson(data);
+        var dataToJson = JsonUtility.ToJson(this);
 
-        PlayerPrefs.SetString("Player", dataToJson);
+        PlayerPrefs.SetString("Player_Data", dataToJson);
+    }
+
+    public void SaveView()
+    {
+        var dataToJson = JsonUtility.ToJson(this);
+
+        PlayerPrefs.SetString("Player_View", dataToJson);
+    }
+
+    public void Update(int level, int health)
+    {
+        _level = level;
+        _bonusHealth += health;
+
+        Save();
     }
 
     public PlayerData Load()
     {
-        var json = PlayerPrefs.GetString("Player");
+        var json = PlayerPrefs.GetString("Player_Data");
 
         return JsonUtility.FromJson<PlayerData>(json);
     }

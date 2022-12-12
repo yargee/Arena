@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New animation", menuName = "Animation/Animation")]
+[CreateAssetMenu(fileName = "New animation", menuName = "Custom Animation/Anim")]
 public class CustomAnimation : ScriptableObject
 {
     [SerializeField] private ConstantKeys.Animations _name;

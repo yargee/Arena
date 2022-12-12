@@ -29,5 +29,4 @@ public class MoveState : State
             Fighter.Animator.transform.localScale = new Vector2(1, 1);
         }
     }
-
 }

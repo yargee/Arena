@@ -29,7 +29,7 @@ public class DamageViewer : MonoBehaviour
         template.transform.position = pos;
         template.gameObject.SetActive(true);
         template.transform.DOMoveY(pos.y + 100, 1.5f).OnComplete(() => ReturnTemplate(template));
-        template.DOColor(Color.clear, 3);
+        template.DOColor(Color.clear, 8);
     }
 
     private void ReturnTemplate(TMP_Text template)

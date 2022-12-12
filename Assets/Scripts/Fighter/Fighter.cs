@@ -11,9 +11,10 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     [SerializeField] private Weapon _weapon;
     [SerializeField] private Armor _armor;
     [SerializeField] private CustomAnimator _animator;
-    [SerializeField] private FighterStateMachine _stateMachine;
     [SerializeField] private Targeter _targeter;
+    [SerializeField] private FighterStateMachine _stateMachine;
 
+    private LevelUtility _level;
     private bool _defeated = false;
     private float _timeAfterAttack = 0;
     private Fighter _target;
@@ -27,12 +28,15 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     public Health Health => _health;
     public Characteristics Characteristics => _characteristics;
     public Fighter Target => _target;
+    public LevelUtility Level => _level;
+
 
     private void OnEnable()
     {
-        _stateMachine.Init(this);
         SetAnimation(ConstantKeys.Animations.Idle, true);
         _health.Died += Defeat;
+        _level = GetComponent<LevelUtility>();
+        _stateMachine.Init(this);
     }
 
     private void OnDisable()
@@ -55,16 +59,15 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
         _target = null;
         _defeated = true;
         transform.SetAsFirstSibling();
-        SetAnimation(ConstantKeys.Animations.Die);
-        Debug.LogError(this.name + " DEFEATED ");
         _stateMachine.Stop();
+        SetAnimation(ConstantKeys.Animations.Die);
+        Debug.LogError(_name + " DEFEATED ");
     }
 
     public void TakeDamage(int damage)
     {
         if (damage < 0)
         {
-            Debug.LogError("damage < 0");
             return;
         }
 
@@ -75,7 +78,6 @@ public class Fighter : MonoBehaviour, IDamagable, IHealable
     {
         if (heal < 0)
         {
-            Debug.LogError("heal < 0");
             return;
         }
 
