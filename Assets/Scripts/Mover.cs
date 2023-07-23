@@ -6,7 +6,7 @@ public class Mover : MonoBehaviour
 
     public void MoveToTarget(Fighter fighter)
     {
-        if((Vector2)transform.position != _target.Position)
+        if(transform.position != _target.Position)
         {
            // fighter.transform.position = fighter.Target.transform.position;
         }

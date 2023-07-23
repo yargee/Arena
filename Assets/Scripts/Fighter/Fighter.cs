@@ -20,7 +20,7 @@ public class Fighter : MonoBehaviour, IAttackableTarget
     public CustomAnimator Animator => _animator;
     public bool IsActive { get; private set; } = true;
     public IAttackableTarget Target { get; private set; }
-    public Vector2 Position { get; private set; }
+    public Vector3 Position { get; private set; }
 
     public bool CanAttack =>IsActive && _attack.HasTarget && _attack.TimeToAttack();
 

@@ -1,4 +1,6 @@
 using BehaviorDesigner.Runtime.Tasks;
+using System.Diagnostics;
+using UnityEngine;
 
 public class AttackTarget : Action
 {
@@ -8,6 +10,9 @@ public class AttackTarget : Action
     {
         if(Fighter.Value.CanAttack)
         {
+            //UnityEngine.Debug.Log("Start attack animation from Attack Action");
+                
+
             Fighter.Value.Animator.PlayAnimation(ConstantKeys.Animations.Attack);
             Fighter.Value.Attack();
             

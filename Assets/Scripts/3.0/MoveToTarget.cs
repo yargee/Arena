@@ -7,10 +7,15 @@ public class MoveToTarget : Action
 
     public override TaskStatus OnUpdate()
     {
-        if (Fighter.Value.Target != null && Fighter.Value.Target.IsActive && Vector2.Distance(Fighter.Value.transform.position, Fighter.Value.Target.Position) > 3)
+        if (Fighter.Value.Target != null && Fighter.Value.Target.IsActive && (Fighter.Value.transform.position - Fighter.Value.Target.Position).sqrMagnitude > 9)
         {
             var newPosition = Vector3.MoveTowards(Fighter.Value.transform.position, Fighter.Value.Target.Position, 4 * Time.deltaTime);
-            Fighter.Value.Animator.PlayAnimation(ConstantKeys.Animations.Run);
+            //UnityEngine.Debug.Log("Start RUN from Move Action");
+
+            if (!Fighter.Value.Animator.Toggler.IsPlaying(ConstantKeys.Animations.Run))
+            {
+                Fighter.Value.Animator.PlayAnimation(ConstantKeys.Animations.Run, null, true);
+            }
 
             Fighter.Value.transform.position = new Vector3(newPosition.x, newPosition.y, newPosition.y);
 

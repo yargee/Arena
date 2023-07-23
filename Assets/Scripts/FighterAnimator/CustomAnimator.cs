@@ -7,13 +7,15 @@ public class CustomAnimator : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private CustomAnimation[] _availableAnimations;
+    [SerializeField] private CustomAnimatorToggler _toggler;
 
     public SpriteRenderer Renderer => _spriteRenderer;
+    public CustomAnimatorToggler Toggler => _toggler;
 
     public void PlayAnimation(ConstantKeys.Animations name, UnityAction Callback = null, bool loop = false)
     {
-        Debug.Log(_spriteRenderer.gameObject.transform.parent.name + " / " + name);
         StopAllCoroutines();
+        _toggler.SetCurrentAnimation(name);
         StartCoroutine(StartAnimation(name, Callback, loop));
     }
 
@@ -21,7 +23,7 @@ public class CustomAnimator : MonoBehaviour
     {
         var animation = _availableAnimations.FirstOrDefault(x => x.Name == name);
 
-        //Debug.Log(animation + " / " + name);
+        Debug.Log(animation + " / " + name);
 
         animation.SetLoop(loop);
 
